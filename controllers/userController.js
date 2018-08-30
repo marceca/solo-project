@@ -8,17 +8,19 @@ const userController = {};
 userController.signUp = (req,res) => {
   let {
     username,
-    password
+    password,
+    credits
   } = req.body;
 
   newUser.create({
     username,
-    password
+    password,
+    credits
   }, (err, response) => {
     if(err) console.log(err)
     else {
       res.locals.id = response._id
-      res.redirect('/');
+      res.redirect('/black-jack');
     }
   })
 }
@@ -31,9 +33,9 @@ userController.login = (req,res) => {
 
   newUser.findOne({username}, (err, user) => {
     if(user !== null){
-      if(req.body.password === user.password) {
+      if(password === user.password) {
         res.cookie('Logged in', 'True');
-        res.redirect('/');
+        res.redirect('/black-jack');
       }
     } else {
       res.redirect('/sign-up')

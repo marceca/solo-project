@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 const newUserSchema = new Schema ({
   username: String,
-  password: String
+  password: String,
+  credits: {
+    type: Number,
+    default: 5000
+  }
 })
 
 const newUser = mongoose.model('newUser', newUserSchema);
