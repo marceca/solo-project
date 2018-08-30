@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+const game = require('../../controllers/gameController');
+
+
 let deck = {
   twoClubs: {
     value: 2,
@@ -261,8 +265,10 @@ let deck = {
   }
 }
 
+
+
 $( document ).ready(function() {
     $('#deal').on('click', function() {
-      console.log(deck)
+      game.deal()
     })
 });
