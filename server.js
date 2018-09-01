@@ -7,6 +7,7 @@ const db = require('./database/mongoose/mongoose.js');
 
 // Controllers
 const userController = require('./controllers/userController');
+const gameController = require('./controllers/gameController');
 
 app.use(express.static('static'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,6 +41,11 @@ app.post('/log-in', (req,res) => {
 })
 
 
+
+// Place bet
+app.post('/place-bet', (req,res) => {
+  gameController.placeBet(req,res);
+})
 
 
 

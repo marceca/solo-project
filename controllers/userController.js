@@ -20,6 +20,7 @@ userController.signUp = (req,res) => {
     if(err) console.log(err)
     else {
       res.locals.id = response._id
+      res.cookie('LoggedInUser', username);
       res.redirect('/black-jack');
     }
   })
@@ -32,9 +33,11 @@ userController.login = (req,res) => {
   } = req.body;
 
   newUser.findOne({username}, (err, user) => {
+      console.log(user)
+      console.log(username)
     if(user !== null){
       if(password === user.password) {
-        res.cookie('Logged in', 'True');
+        res.cookie('LoggedIn', user.username);
         res.redirect('/black-jack');
       }
     } else {

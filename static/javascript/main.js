@@ -1,7 +1,3 @@
-const mongoose = require('mongoose');
-const game = require('../../controllers/gameController');
-
-
 let deck = {
   twoClubs: {
     value: 2,
@@ -266,9 +262,48 @@ let deck = {
 }
 
 
-
 $( document ).ready(function() {
+  // Grabs cookies for user information
+  var cookies = document.cookie;
+
+
+  // Holds bet value
+    let value = 0;
+    // Increments bet value by 5
+    $('#bet-five').on('click', function() {
+      value += 5;
+      $('#bet-amount').html(value);
+      console.log(value)
+    })
+
+    // Increments bet value by 10
+    $('#bet-ten').on('click', function() {
+      value += 10;
+      $('#bet-amount').html(value);
+      console.log(value)
+    })
+
+    // Increments bet value by 25
+    $('#bet-twenty-five').on('click', function() {
+      value += 25;
+      $('#bet-amount').html(value);
+      console.log(value)
+    })
+
+    // Deal the hand when value is set to higher then 0
     $('#deal').on('click', function() {
-      game.deal()
+      var valueObj = {};
+      valueObj.value = value;
+      if(value > 0) {
+        $.ajax({
+          data: JSON.stringify(valueObj),
+          dataType: 'json',
+          type: 'POST',
+          url: '/place-bet'
+      });
+
+      } else {
+        console.log('Place a bet please!')
+      }
     })
 });
