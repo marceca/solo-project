@@ -19,7 +19,12 @@ app.get('/', (req,res) => {
 });
 
 app.get('/black-jack', (req,res) => {
-  res.sendFile(path.join(__dirname + '/templates/black-jack.html'));
+  console.log('black jack get request',req.cookies.LoggedIn)
+  if(req.cookies.LoggedIn) {
+    res.sendFile(path.join(__dirname + '/templates/black-jack.html'));
+  } else {
+    res.redirect('/sign-up');
+  }
 });
 
 // Sign up
@@ -47,6 +52,10 @@ app.post('/place-bet', (req,res) => {
   gameController.placeBet(req,res);
 })
 
+// Reset cookies
+app.post('/get-new-cookies', (req,res) => {
+  gameController.getNewCookies(req,res);
+});
 
 
 app.listen(3000);

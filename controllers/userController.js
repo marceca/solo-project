@@ -20,7 +20,8 @@ userController.signUp = (req,res) => {
     if(err) console.log(err)
     else {
       res.locals.id = response._id
-      res.cookie('LoggedInUser', username);
+      res.cookie('LoggedIn', username);
+      res.cookie('Credits', 5000)
       res.redirect('/black-jack');
     }
   })
@@ -36,6 +37,7 @@ userController.login = (req,res) => {
     if(user !== null){
       if(password === user.password) {
         res.cookie('LoggedIn', user.username);
+        res.cookie('Credits', user.credits)
         res.redirect('/black-jack');
       }
     } else {

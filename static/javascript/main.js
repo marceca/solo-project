@@ -276,118 +276,129 @@ $( document ).ready(function() {
 
   // Increments bet value by 5
   $('#bet-five').on('click', function() {
-    value += 5;
-    $('#bet-amount').html(value);
+    if($('#bet-five').attr('data-click-state') === '1') {
+      value += 5;
+      $('#bet-amount').html(value);
+    }
   })
 
   // Increments bet value by 10
   $('#bet-ten').on('click', function() {
-    value += 10;
-    $('#bet-amount').html(value);
+    if($('#bet-five').attr('data-click-state') === '1') {
+      value += 10;
+      $('#bet-amount').html(value);
+    }
   })
 
   // Increments bet value by 25
   $('#bet-twenty-five').on('click', function() {
-    value += 25;
-    $('#bet-amount').html(value);
+    if($('#bet-five').attr('data-click-state') === '1') {
+      value += 25;
+      $('#bet-amount').html(value);
+    }
   })
 
-  // Deal the hand when value is set to higher then 0
+
+  ///////////////////////////////////////////////////////
+  // Deal the hand when value is set to higher then 0 //
+  /////////////////////////////////////////////////////
   $('#deal').on('click', function() {
-    var valueObj = {};
-    valueObj.value = value;
-    if(value > 0) {
-      $.ajax({
-        data: JSON.stringify(valueObj),
-        dataType: 'json',
-        type: 'POST',
-        url: '/place-bet'
-    });
+    if($('#deal').attr('data-click-state') === '1') {
+      var valueObj = {};
+      valueObj.value = value;
+      if(value > 0) {
+        $.ajax({
+          data: JSON.stringify(valueObj),
+          dataType: 'json',
+          type: 'POST',
+          url: '/place-bet'
+        });
 
-    // Dealer first card
-    // Create random number from 1 - deck.length
-    var ranNum = Math.floor(Math.random()*deck.length);
-    // Get first card from ranNum
-    let dealerCard1 = deck[ranNum];
-    // Remove ranNum from deck
-    deck.splice(ranNum, 1)
-    // Add first card to dealer value
-    dealerVal += dealerCard1.value
+      // Dealer first card
+      // Create random number from 1 - deck.length
+      var ranNum = Math.floor(Math.random()*deck.length);
+      // Get first card from ranNum
+      let dealerCard1 = deck[ranNum];
+      // Remove ranNum from deck
+      deck.splice(ranNum, 1)
+      // Add first card to dealer value
+      dealerVal += dealerCard1.value
 
-    // Player first card
-    // Create random number from 1 - deck.length
-    var ranNum = Math.floor(Math.random()*deck.length);
-    //Get second cad from ranNum
-    let playerCard1 = deck[ranNum];
-    // Remove ranNum from deck
-    deck.splice(ranNum, 1)
-    // Add first card to player value
-    playerVal += playerCard1.value
+      // Player first card
+      // Create random number from 1 - deck.length
+      var ranNum = Math.floor(Math.random()*deck.length);
+      //Get second cad from ranNum
+      let playerCard1 = deck[ranNum];
+      // Remove ranNum from deck
+      deck.splice(ranNum, 1)
+      // Add first card to player value
+      playerVal += playerCard1.value
 
-    // Dealer second card
-    // Create random number from 1 - deck.length
-    var ranNum = Math.floor(Math.random()*deck.length);
-    //Get second cad from ranNum
-    let dealerCard2 = deck[ranNum];
-    // Remove ranNum from deck
-    deck.splice(ranNum, 1)
-    // Add second card to dealer value
-    dealerVal += dealerCard2.value
+      // Dealer second card
+      // Create random number from 1 - deck.length
+      var ranNum = Math.floor(Math.random()*deck.length);
+      //Get second cad from ranNum
+      let dealerCard2 = deck[ranNum];
+      // Remove ranNum from deck
+      deck.splice(ranNum, 1)
+      // Add second card to dealer value
+      dealerVal += dealerCard2.value
 
-    // Player second card
-    // Create random number from 1 - deck.length
-    var ranNum = Math.floor(Math.random()*deck.length);
-    //Get second cad from ranNum
-    let playerCard2 = deck[ranNum];
-    // Remove ranNum from deck
-    deck.splice(ranNum, 1)
-    // Add second card to player value
-    playerVal += playerCard2.value
+      // Player second card
+      // Create random number from 1 - deck.length
+      var ranNum = Math.floor(Math.random()*deck.length);
+      //Get second cad from ranNum
+      let playerCard2 = deck[ranNum];
+      // Remove ranNum from deck
+      deck.splice(ranNum, 1)
+      // Add second card to player value
+      playerVal += playerCard2.value
 
-    // Dealer cards
-    $('<div class="card-container"><img src="'+ dealerCard1.img +'"></div>').appendTo('#dealer-cards')
-    $('<div class="card-container"><img src="'+ dealerCard2.img +'"></div>').appendTo('#dealer-cards')
+      // Dealer cards
+      $('<div class="card-container"><img src="'+ dealerCard1.img +'"></div>').appendTo('#dealer-cards')
+      $('<div class="card-container"><img src="'+ dealerCard2.img +'"></div>').appendTo('#dealer-cards')
 
-    // Player cards
-    $('<div class="card-container"><img src="'+ playerCard1.img +'"></div>').appendTo('#player-cards')
-    $('<div class="card-container"><img src="'+ playerCard2.img +'"></div>').appendTo('#player-cards')
+      // Player cards
+      $('<div class="card-container"><img src="'+ playerCard1.img +'"></div>').appendTo('#player-cards')
+      $('<div class="card-container"><img src="'+ playerCard2.img +'"></div>').appendTo('#player-cards')
 
-    // Remove option to deal and change bet value. Add opacity to signal to player
-    $('#deal').attr('data-click-state', 0).addClass('button-completed')
-    $('#bet-five').attr('data-click-state', 0).addClass('button-completed')
-    $('#bet-ten').attr('data-click-state', 0).addClass('button-completed')
-    $('#bet-twenty-five').attr('data-click-state', 0).addClass('button-completed')
+      // Remove option to deal and change bet value. Add opacity to signal to player
+      $('#deal').attr('data-click-state', 0).addClass('button-completed')
+      $('#bet-five').attr('data-click-state', 0).addClass('button-completed')
+      $('#bet-ten').attr('data-click-state', 0).addClass('button-completed')
+      $('#bet-twenty-five').attr('data-click-state', 0).addClass('button-completed')
 
-    // Add Hit, Stay, Double and Split button functionality
-    $('#hit').attr('data-click-state', 1).removeClass('button-completed')
-    $('#stay').attr('data-click-state', 1).removeClass('button-completed')
-    $('#double').attr('data-click-state', 1).removeClass('button-completed')
-    $('#split').attr('data-click-state', 1).removeClass('button-completed')
+      // Add Hit, Stay, Double and Split button functionality
+      $('#hit').attr('data-click-state', 1).removeClass('button-completed')
+      $('#stay').attr('data-click-state', 1).removeClass('button-completed')
+      $('#double').attr('data-click-state', 1).removeClass('button-completed')
+      $('#split').attr('data-click-state', 1).removeClass('button-completed')
 
-    if(dealerVal === 21 && playerVal === 21) {
-      // If both player and dealer have Black Jack
-      $('<div class="announcement-modal">Push!</div>').appendTo('body')
-      $('#hit').attr('data-click-state', 0).addClass('button-completed')
-      $('#stay').attr('data-click-state', 0).addClass('button-completed')
-      $('#double').attr('data-click-state', 0).addClass('button-completed')
-      $('#split').attr('data-click-state', 0).addClass('button-completed')
-    } else {
-      // If dealer has Black Jack
-      if(dealerVal === 21) {
-        $('<div class="announcement-modal">Dealer Black Jack</div>').appendTo('body')
+      if(dealerVal === 21 && playerVal === 21) {
+        // If both player and dealer have Black Jack
+        $('<div class="announcement-modal">Push!</div>').appendTo('body')
         $('#hit').attr('data-click-state', 0).addClass('button-completed')
         $('#stay').attr('data-click-state', 0).addClass('button-completed')
         $('#double').attr('data-click-state', 0).addClass('button-completed')
         $('#split').attr('data-click-state', 0).addClass('button-completed')
-      }
+      } else {
+        // If dealer has Black Jack
+        if(dealerVal === 21) {
+          $('<div class="announcement-modal">Dealer Black Jack</div>').appendTo('body')
+          $('#hit').attr('data-click-state', 0).addClass('button-completed')
+          $('#stay').attr('data-click-state', 0).addClass('button-completed')
+          $('#double').attr('data-click-state', 0).addClass('button-completed')
+          $('#split').attr('data-click-state', 0).addClass('button-completed')
+        }
 
-      // If player has Black Jack
-      if(playerVal === 21) {
-        $('<div class="announcement-modal">Player Black Jack</div>').appendTo('body')
-        $('#hit').attr('data-click-state', 0).addClass('button-completed')
-        $('#stay').attr('data-click-state', 0).addClass('button-completed')
-        $('#double').attr('data-click-state', 0).addClass('button-completed')
-        $('#split').attr('data-click-state', 0).addClass('button-completed')
+        // If player has Black Jack
+        if(playerVal === 21) {
+          $('<div class="announcement-modal">Player Black Jack</div>').appendTo('body')
+          $('#hit').attr('data-click-state', 0).addClass('button-completed')
+          $('#stay').attr('data-click-state', 0).addClass('button-completed')
+          $('#double').attr('data-click-state', 0).addClass('button-completed')
+          $('#split').attr('data-click-state', 0).addClass('button-completed')
+        }
       }
     }
 
@@ -396,7 +407,9 @@ $( document ).ready(function() {
     }
   })
 
-  // Hit
+  //////////
+  // Hit //
+  ////////
   $('#hit').on('click', function() {
     if($('#hit').attr('data-click-state') === '1') {
       // Create random number form 1 - deck.length
@@ -419,7 +432,9 @@ $( document ).ready(function() {
     }
   })
 
-  // Stay
+  ///////////
+  // Stay //
+  /////////
   $('#stay').on('click', function() {
     // Remove functionality of buttons
     $('#hit').attr('data-click-state', 0).addClass('button-completed')
@@ -430,4 +445,26 @@ $( document ).ready(function() {
     // Play dealer hand out
     
   })
+
+  /////////////
+  // Double //
+  ///////////
+  $('#double').on('click', function() {
+    if($('#double').attr('data-click-state') === '1') {
+      let regEx = /Credits=(\d+)/
+      let credits = cookies.match(regEx);
+      console.log(credits[1])
+    }
+  })
+
+  $(window).bind('beforeunload',function(){
+
+    //save info somewhere
+    fetch('/get-new-cookies', {
+      method: 'POST',
+      mode: 'same-origin',
+      // This is the key to updating cookies. With out redirect: follow cookies will not save
+      redirect: 'follow',
+    })
+  });
 });
