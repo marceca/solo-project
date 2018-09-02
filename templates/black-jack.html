@@ -9,31 +9,33 @@
   <title>Black Jack!</title>
 </head>
 <body>
-  <div class="header-container">
-    <div class="title">Black Jack</div>
-  </div>
-  <div class="dealer-cards-container">
-    <div class="card-container">
-      <img src="/cards/AD.png">
+  <div class="game-position">
+    <div class="header-container">
+      <div class="title">Black Jack</div>
     </div>
-    <div class="card-container">
-      <img src="/cards/KC.png">
+    <div class="cards-container" id="dealer-cards">
     </div>
-  </div>
-  <div class="betting-container">
-    <div class="coin" id="bet-five">5</div>
-    <div class="coin" id="bet-ten">10</div>
-    <div class="coin" id="bet-twenty-five">25</div>
-  </div>
-  <div class="betting-container">
-    <div>Bet: <span id="bet-amount"></span></div>
-  </div>
-  <div class="actions-container">
-    <div class="button" id="deal">Deal</div>
-    <div class="button" id="hit">Hit</div>
-    <div class="button" id="stay">Stay</div>
-    <div class="button" id="double">Double</div>
-    <div class="button" id="split">Split</div>
+    <div class="cards-container cards-container__player" id="player-cards">
+    </div>
+    <div class="player-actions">
+      <div class="betting-container">
+        <div class="bet-amounts">
+          <div class="coin" id="bet-five">5</div>
+          <div class="coin" id="bet-ten">10</div>
+          <div class="coin" id="bet-twenty-five">25</div>
+        </div>
+        <div>
+          <div class="bet-value">Bet: <span id="bet-amount"></span></div>
+        </div>
+      </div>
+      <div class="actions-container">
+        <div class="button" id="deal">Deal</div>
+        <div class="button" id="hit">Hit</div>
+        <div class="button" id="stay">Stay</div>
+        <div class="button" id="double">Double</div>
+        <div class="button" id="split">Split</div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

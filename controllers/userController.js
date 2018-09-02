@@ -33,8 +33,6 @@ userController.login = (req,res) => {
   } = req.body;
 
   newUser.findOne({username}, (err, user) => {
-      console.log(user)
-      console.log(username)
     if(user !== null){
       if(password === user.password) {
         res.cookie('LoggedIn', user.username);
