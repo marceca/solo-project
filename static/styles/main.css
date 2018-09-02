@@ -121,7 +121,7 @@ table {
 }
   .bet-amounts {
     display: flex;
-    justify-content: space-evenly
+    justify-content: space-evenly;
   }
 
     .coin {
@@ -142,7 +142,7 @@ table {
 
 
 /* Black Jack Modal */
-.black-jack-modal {
+.announcement-modal {
   width: 100%;
   height: auto;
   position: absolute;
@@ -151,4 +151,17 @@ table {
   margin-left: -270px;
   margin-top: -30px;
   font-size: 5em;
+}
+
+
+
+/* Miscellaneous */
+.display-none {
+  display: none;
+}
+
+.button-completed {
+  background-color: rgb(152, 251, 152);
+  border-color: grey;
+  cursor: default
 }

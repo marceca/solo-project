@@ -352,18 +352,21 @@ $( document ).ready(function() {
     $('<div class="card-container"><img src="'+ playerCard1.img +'"></div>').appendTo('#player-cards')
     $('<div class="card-container"><img src="'+ playerCard2.img +'"></div>').appendTo('#player-cards')
 
+    // Remove option to deal again and put faded color over deal
+    $('#deal').off('click').addClass('button-completed')
+
     if(dealerVal === 21 && playerVal === 21) {
       // If both player and dealer have Black Jack
 
     } else {
       // If dealer has Black Jack
       if(dealerVal === 21) {
-        $('<div class="black-jack-modal">Dealer Black Jack</div>').appendTo('body')
+        $('<div class="announcement-modal">Dealer Black Jack</div>').appendTo('body')
       }
 
       // If player has Black Jack
       if(playerVal === 21) {
-        $('<div class="black-jack-modal">Player Black Jack</div>').appendTo('body')
+        $('<div class="announcement-modal">Player Black Jack</div>').appendTo('body')
       }
     }
 
@@ -382,7 +385,13 @@ $( document ).ready(function() {
     deck.splice(ranNum, 1)
     // Add hit card to value
     playerVal += hit.value
-    console.log(dealerVal)
     $('<div class="card-container"><img src="'+ hit.img +'"></div>').appendTo('#player-cards')
+    if(playerVal > 21) {
+      $('#hit').off('click').addClass('button-completed')
+      $('#stay').off('click').addClass('button-completed')
+      $('#double').off('click').addClass('button-completed')
+      $('#split').off('click').addClass('button-completed')
+      $('<div class="announcement-modal">Player Bust!</div>').appendTo('body')
+    }
   })
 });
