@@ -352,21 +352,42 @@ $( document ).ready(function() {
     $('<div class="card-container"><img src="'+ playerCard1.img +'"></div>').appendTo('#player-cards')
     $('<div class="card-container"><img src="'+ playerCard2.img +'"></div>').appendTo('#player-cards')
 
-    // Remove option to deal again and put faded color over deal
-    $('#deal').off('click').addClass('button-completed')
+    // Remove option to deal and change bet value. Add opacity to signal to player
+    $('#deal').attr('data-click-state', 0).addClass('button-completed')
+    $('#bet-five').attr('data-click-state', 0).addClass('button-completed')
+    $('#bet-ten').attr('data-click-state', 0).addClass('button-completed')
+    $('#bet-twenty-five').attr('data-click-state', 0).addClass('button-completed')
+
+    // Add Hit, Stay, Double and Split button functionality
+    $('#hit').attr('data-click-state', 1).removeClass('button-completed')
+    $('#stay').attr('data-click-state', 1).removeClass('button-completed')
+    $('#double').attr('data-click-state', 1).removeClass('button-completed')
+    $('#split').attr('data-click-state', 1).removeClass('button-completed')
 
     if(dealerVal === 21 && playerVal === 21) {
       // If both player and dealer have Black Jack
-
+      $('<div class="announcement-modal">Push!</div>').appendTo('body')
+      $('#hit').attr('data-click-state', 0).addClass('button-completed')
+      $('#stay').attr('data-click-state', 0).addClass('button-completed')
+      $('#double').attr('data-click-state', 0).addClass('button-completed')
+      $('#split').attr('data-click-state', 0).addClass('button-completed')
     } else {
       // If dealer has Black Jack
       if(dealerVal === 21) {
         $('<div class="announcement-modal">Dealer Black Jack</div>').appendTo('body')
+        $('#hit').attr('data-click-state', 0).addClass('button-completed')
+        $('#stay').attr('data-click-state', 0).addClass('button-completed')
+        $('#double').attr('data-click-state', 0).addClass('button-completed')
+        $('#split').attr('data-click-state', 0).addClass('button-completed')
       }
 
       // If player has Black Jack
       if(playerVal === 21) {
         $('<div class="announcement-modal">Player Black Jack</div>').appendTo('body')
+        $('#hit').attr('data-click-state', 0).addClass('button-completed')
+        $('#stay').attr('data-click-state', 0).addClass('button-completed')
+        $('#double').attr('data-click-state', 0).addClass('button-completed')
+        $('#split').attr('data-click-state', 0).addClass('button-completed')
       }
     }
 
@@ -377,21 +398,36 @@ $( document ).ready(function() {
 
   // Hit
   $('#hit').on('click', function() {
-    // Create random number form 1 - deck.length
-    var ranNum = Math.floor(Math.random()*deck.length);
-    // Get hit card from ranNum
-    let hit = deck[ranNum];
-    // Remove ranNum from deck
-    deck.splice(ranNum, 1)
-    // Add hit card to value
-    playerVal += hit.value
-    $('<div class="card-container"><img src="'+ hit.img +'"></div>').appendTo('#player-cards')
-    if(playerVal > 21) {
-      $('#hit').off('click').addClass('button-completed')
-      $('#stay').off('click').addClass('button-completed')
-      $('#double').off('click').addClass('button-completed')
-      $('#split').off('click').addClass('button-completed')
-      $('<div class="announcement-modal">Player Bust!</div>').appendTo('body')
+    if($('#hit').attr('data-click-state') === '1') {
+      // Create random number form 1 - deck.length
+      var ranNum = Math.floor(Math.random()*deck.length);
+      // Get hit card from ranNum
+      let hit = deck[ranNum];
+      // Remove ranNum from deck
+      deck.splice(ranNum, 1)
+      // Add hit card to value
+      playerVal += hit.value
+      $('<div class="card-container"><img src="'+ hit.img +'"></div>').appendTo('#player-cards') 
     }
+    if(playerVal > 21) {
+      // If player busts remove functionality of buttons and show modal Player Bust!
+      $('<div class="announcement-modal">Player Bust!</div>').appendTo('body')
+      $('#hit').attr('data-click-state', 0).addClass('button-completed')
+      $('#stay').attr('data-click-state', 0).addClass('button-completed')
+      $('#double').attr('data-click-state', 0).addClass('button-completed')
+      $('#split').attr('data-click-state', 0).addClass('button-completed')
+    }
+  })
+
+  // Stay
+  $('#stay').on('click', function() {
+    // Remove functionality of buttons
+    $('#hit').attr('data-click-state', 0).addClass('button-completed')
+    $('#stay').attr('data-click-state', 0).addClass('button-completed')
+    $('#double').attr('data-click-state', 0).addClass('button-completed')
+    $('#split').attr('data-click-state', 0).addClass('button-completed')
+
+    // Play dealer hand out
+    
   })
 });

@@ -161,7 +161,6 @@ table {
 }
 
 .button-completed {
-  background-color: rgb(152, 251, 152);
-  border-color: grey;
+  opacity: 0.5;
   cursor: default
 }
