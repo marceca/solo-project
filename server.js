@@ -19,7 +19,6 @@ app.get('/', (req,res) => {
 });
 
 app.get('/black-jack', (req,res) => {
-  console.log('black jack get request',req.cookies.LoggedIn)
   if(req.cookies.LoggedIn) {
     res.sendFile(path.join(__dirname + '/templates/black-jack.html'));
   } else {
@@ -50,6 +49,16 @@ app.post('/log-in', (req,res) => {
 // Place bet
 app.post('/place-bet', (req,res) => {
   gameController.placeBet(req,res);
+})
+
+// Player won
+app.post('/player-won', (req,res) => {
+  gameController.playerWon(req,res);
+})
+
+// Player push
+app.post('/player-push', (req,res) => {
+  gameController.playerPush(req,res);
 })
 
 // Reset cookies

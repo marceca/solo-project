@@ -2,17 +2,13 @@ const newUser = require('../database/models/newUserModel')
 const game = {};
 
 game.placeBet = (req,res) => { 
-  // Gets value from key -- comes in as -- { '{"value":25}': '' }
-  // For some reason ajax data is coming in the key of body
-  let obj = Object.keys(req.body);
-  // Uses RegEx to get the value of value
-  let val = obj[0].match(/\d+/);
+  let val = req.body.value;
   // Get current user from cookies
   let username = req.cookies.LoggedIn;
   // Find current user in DB
   newUser.findOne({username}, (err, user) => { 
     // Update current user credits
-    user.credits = user.credits - val[0];
+    user.credits = user.credits - val;
     res.cookie('Credits', user.credits)
     // Save current user credits
     user.save(function(err, updatedUser) {
@@ -33,5 +29,28 @@ game.getNewCookies = (req,res) => {
   });  
 }
 
+game.playerWon = (req,res) => {
+  let username = req.cookies.LoggedIn;
+  newUser.findOne({username}, (err, user) => { 
+    // Add winning amount to current credits
+    if(user) {
+      user.credits = parseInt(user.credits) + (parseInt(req.body.value) * 2);
+      user.save();
+    }
+    res.send();
+  });
+}
+
+game.playerPush = (req,res) => {
+  let username = req.cookies.LoggedIn;
+  // Add wager amount to current credits
+  newUser.findOne({username}, (err, user) => { 
+    if(user) {
+      user.credits = parseInt(user.credits) + parseInt(req.body.value);
+      user.save();
+    }
+  res.send();
+  });
+}
 
 module.exports = game;

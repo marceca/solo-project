@@ -13,6 +13,7 @@
     <div class="header-container">
       <div class="title">Black Jack</div>
     </div>
+    <div class="reset-button button-completed" data-click-state="0" id="reset-game">Reset</div>
     <div class="cards-container" id="dealer-cards">
     </div>
     <div class="cards-container" id="player-cards">
@@ -25,7 +26,7 @@
           <div class="coin" data-click-state="1" id="bet-twenty-five">25</div>
         </div>
         <div>
-          <div class="bet-value">Bet: <span id="bet-amount"></span></div>
+          <div class="bet-value">Bet: <span id="bet-amount">0</span></div>
         </div>
       </div>
       <div class="actions-container">
@@ -37,5 +38,6 @@
       </div>
     </div>
   </div>
+  <div id="outcome-modal"></div>
 </body>
 </html>
